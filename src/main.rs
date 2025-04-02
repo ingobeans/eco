@@ -107,18 +107,11 @@ fn parse_selection(arg: String) -> Option<(fn(Vec<String>) -> Vec<u8>, fn(Vec<u8
 }
 
 fn print_help() -> ! {
-    println!(
-        "usage: eco <from>-<to> <any data to be converted*>
-
-<from> and <to> may be any characters in order of any allowed format, so \"binary\", \"b\" and \"bin\" will all referance the same format.
-
-formats:
-    binary
-    hex
-    utf8 (or text)
-    decimal
-    ascii",
-    );
+    // grab help message from readme.md
+    let readme = include_str!("../readme.md").replace("`", "\"");
+    let (_, mut text) = readme.split_once("## help message").unwrap();
+    text = text.trim();
+    println!("{text}");
 
     std::process::exit(1);
 }
