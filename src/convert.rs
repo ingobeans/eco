@@ -1,3 +1,5 @@
+use std::io::{stdout, Write};
+
 use base64::prelude::*;
 
 pub fn parse_hex(input: Vec<String>) -> Vec<u8> {
@@ -71,4 +73,10 @@ pub fn to_utf8(input: Vec<u8>) {
 }
 pub fn to_base64(input: Vec<u8>) {
     println!("{}", BASE64_STANDARD.encode(input))
+}
+pub fn to_raw(input: Vec<u8>) {
+    stdout()
+        .lock()
+        .write_all(&input)
+        .expect("couldn't write data to stdout");
 }
