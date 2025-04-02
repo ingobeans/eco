@@ -10,7 +10,7 @@ or, a shorter version: `eco d-a 97 98 99 100` > `abcd`
 
 usage: `eco <from>-<to> <any data to be converted>`
 
-`from` and `to` may be any characters in order of any allowed format, so "binary", "b" and "bin" will all referance the same format.
+`from` and `to` may be any characters in order of any allowed format, so "binary", "b" and "bin" will all reference the same format.
 
 formats
 
