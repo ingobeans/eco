@@ -25,7 +25,11 @@ pub fn parse_decimal(input: Vec<String>) -> Vec<u8> {
 pub fn parse_binary(input: Vec<String>) -> Vec<u8> {
     let mut new = Vec::new();
     for word in input {
-        let value = u8::from_str_radix(&word, 2).expect("bad binary");
+        let new_word = match word.split_once("b") {
+            Some((_, value)) => value,
+            None => &word,
+        };
+        let value = u8::from_str_radix(new_word, 2).expect("bad binary");
         new.push(value);
     }
     new
