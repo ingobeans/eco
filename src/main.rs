@@ -79,6 +79,7 @@ fn get_selection_hashmaps() -> (
     hashmap_to.insert("hex", to_hex);
     hashmap_to.insert("utf8", to_utf8);
     hashmap_to.insert("text", to_utf8);
+    hashmap_to.insert("ascii", to_ascii);
 
     (hashmap_from, hashmap_to)
 }
