@@ -45,7 +45,7 @@ pub fn to_hex(input: Vec<u8>) {
 }
 pub fn to_decimal(input: Vec<u8>) {
     for value in input {
-        print!("{value}")
+        print!("{value} ")
     }
     print!("\n")
 }
