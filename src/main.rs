@@ -11,7 +11,7 @@ fn get_selection_hashmaps() -> (
 
     hashmap_from.insert("decimal", parse_decimal);
 
-    hashmap_from.insert("base64", parse_decimal);
+    hashmap_from.insert("base64", parse_base64);
     hashmap_from.insert("64", parse_base64);
 
     hashmap_from.insert("hex", parse_hex);
