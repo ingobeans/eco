@@ -5,7 +5,11 @@ use base64::prelude::*;
 pub fn parse_hex(input: Vec<String>) -> Vec<u8> {
     let mut new = Vec::new();
     for word in input {
-        let value = u8::from_str_radix(&word, 16).expect("bad hex");
+        let new_word = match word.split_once("x") {
+            Some((_, value)) => value,
+            None => &word,
+        };
+        let value = u8::from_str_radix(new_word, 16).expect("bad hex");
         new.push(value);
     }
     new
