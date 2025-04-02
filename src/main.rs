@@ -8,30 +8,21 @@ fn get_selection_hashmaps() -> (
 ) {
     let mut hashmap_from: HashMap<&str, fn(Vec<String>) -> Vec<u8>> = HashMap::new();
     hashmap_from.insert("binary", parse_binary);
-
     hashmap_from.insert("decimal", parse_decimal);
-
     hashmap_from.insert("base64", parse_base64);
     hashmap_from.insert("64", parse_base64);
-
     hashmap_from.insert("hex", parse_hex);
-
     hashmap_from.insert("utf8", parse_utf8);
     hashmap_from.insert("text", parse_utf8);
     hashmap_from.insert("ascii", parse_utf8); // ascii is backwards compatibable with utf-8
 
     let mut hashmap_to: HashMap<&str, fn(Vec<u8>)> = HashMap::new();
     hashmap_to.insert("binary", to_binary);
-
     hashmap_to.insert("decimal", to_decimal);
-
     hashmap_to.insert("base64", to_base64);
     hashmap_to.insert("64", to_base64);
-
     hashmap_to.insert("hex", to_hex);
-
     hashmap_to.insert("raw", to_raw);
-
     hashmap_to.insert("utf8", to_utf8);
     hashmap_to.insert("text", to_utf8);
     hashmap_to.insert("ascii", to_ascii);
