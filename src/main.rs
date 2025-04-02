@@ -72,6 +72,7 @@ fn get_selection_hashmaps() -> (
     hashmap_from.insert("hex", parse_hex);
     hashmap_from.insert("utf8", parse_utf8);
     hashmap_from.insert("text", parse_utf8);
+    hashmap_from.insert("ascii", parse_utf8); // ascii is backwards compatibable with utf-8
 
     let mut hashmap_to: HashMap<&str, fn(Vec<u8>)> = HashMap::new();
     hashmap_to.insert("binary", to_binary);
@@ -84,10 +85,12 @@ fn get_selection_hashmaps() -> (
     (hashmap_from, hashmap_to)
 }
 
+/// Parses a selection argument, like "binary-hex", or "t-d" to corresponding functions of conversion
 fn parse_selection(arg: String) -> Option<(fn(Vec<String>) -> Vec<u8>, fn(Vec<u8>))> {
     let (left, right) = arg.split_once('-')?;
     let (hashmap_from, hashmap_to) = get_selection_hashmaps();
 
+    /// Function that searches a `hashmap` for any key that starts_with a specified `query`
     fn search_hashmap<'a, T>(hashmap: &'a HashMap<&'static str, T>, query: &str) -> Option<&'a T> {
         for (key, value) in hashmap.iter() {
             if key.starts_with(&query) {
@@ -103,14 +106,32 @@ fn parse_selection(arg: String) -> Option<(fn(Vec<String>) -> Vec<u8>, fn(Vec<u8
     Some((*from, *to))
 }
 
+fn print_help() -> ! {
+    println!(
+        "usage: eco <from>-<to> <any data to be converted*>
+
+<from> and <to> may be any characters in order of any allowed format, so \"binary\", \"b\" and \"bin\" will all referance the same format.
+
+formats:
+    binary
+    hex
+    utf8 (or text)
+    decimal
+    ascii",
+    );
+
+    std::process::exit(1);
+}
+
 fn main() {
     let mut args = args();
 
-    let from: fn(Vec<String>) -> Vec<u8>;
-    let to: fn(Vec<u8>);
-
-    let selection_arg = args.nth(1).expect("incorrect usage");
-    (from, to) = parse_selection(selection_arg).expect("invalid selection");
+    let Some(selection_arg) = args.nth(1) else {
+        print_help()
+    };
+    let Some((from, to)) = parse_selection(selection_arg) else {
+        print_help()
+    };
 
     let args_vec = args.collect();
     let data = from(args_vec);
