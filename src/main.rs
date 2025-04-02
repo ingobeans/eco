@@ -1,4 +1,4 @@
-use std::env::args;
+use std::{collections::HashMap, env::args};
 
 fn parse_hex(input: Vec<String>) -> Vec<u8> {
     let mut new = Vec::new();
@@ -62,27 +62,44 @@ fn to_utf8(input: Vec<u8>) {
     print!("{text}\n")
 }
 
+fn get_selection_hashmaps() -> (
+    HashMap<&'static str, fn(Vec<String>) -> Vec<u8>>,
+    HashMap<&'static str, fn(Vec<u8>)>,
+) {
+    let mut hashmap_from: HashMap<&str, fn(Vec<String>) -> Vec<u8>> = HashMap::new();
+    hashmap_from.insert("binary", parse_binary);
+    hashmap_from.insert("decimal", parse_decimal);
+    hashmap_from.insert("hex", parse_hex);
+    hashmap_from.insert("utf8", parse_utf8);
+    hashmap_from.insert("text", parse_utf8);
+
+    let mut hashmap_to: HashMap<&str, fn(Vec<u8>)> = HashMap::new();
+    hashmap_to.insert("binary", to_binary);
+    hashmap_to.insert("decimal", to_decimal);
+    hashmap_to.insert("hex", to_hex);
+    hashmap_to.insert("utf8", to_utf8);
+    hashmap_to.insert("text", to_utf8);
+
+    (hashmap_from, hashmap_to)
+}
+
 fn parse_selection(arg: String) -> Option<(fn(Vec<String>) -> Vec<u8>, fn(Vec<u8>))> {
     let (left, right) = arg.split_once('-')?;
+    let (hashmap_from, hashmap_to) = get_selection_hashmaps();
 
-    let from = match left {
-        "b" | "binary" => parse_binary,
-        "d" | "decimal" => parse_decimal,
-        "h" | "hex" => parse_hex,
-        "u" | "t" | "utf8" | "text" => parse_utf8,
-        _ => panic!(),
-    };
+    fn search_hashmap<'a, T>(hashmap: &'a HashMap<&'static str, T>, query: &str) -> Option<&'a T> {
+        for (key, value) in hashmap.iter() {
+            if key.starts_with(&query) {
+                return Some(value);
+            }
+        }
+        None
+    }
 
-    let to = match right {
-        "b" | "binary" => to_binary,
-        "d" | "decimal" => to_decimal,
-        "h" | "hex" => to_hex,
-        "a" | "ascii" => to_ascii,
-        "u" | "t" | "utf8" | "text" => to_utf8,
-        _ => panic!(),
-    };
+    let from = search_hashmap(&hashmap_from, left)?;
+    let to = search_hashmap(&hashmap_to, right)?;
 
-    Some((from, to))
+    Some((*from, *to))
 }
 
 fn main() {
