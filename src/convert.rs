@@ -13,7 +13,7 @@ pub fn parse_hex(input: Vec<String>) -> Vec<u8> {
 pub fn parse_decimal(input: Vec<String>) -> Vec<u8> {
     let mut new = Vec::new();
     for word in input {
-        let value = word.parse().expect("bad binary");
+        let value = word.parse().expect("bad number");
         new.push(value);
     }
     new
