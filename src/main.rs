@@ -66,19 +66,19 @@ fn parse_selection(arg: String) -> Option<(fn(Vec<String>) -> Vec<u8>, fn(Vec<u8
     let (left, right) = arg.split_once('-')?;
 
     let from = match left {
-        "b" => parse_binary,
-        "d" => parse_decimal,
-        "h" => parse_hex,
-        "u" | "t" => parse_utf8,
+        "b" | "binary" => parse_binary,
+        "d" | "decimal" => parse_decimal,
+        "h" | "hex" => parse_hex,
+        "u" | "t" | "utf8" | "text" => parse_utf8,
         _ => panic!(),
     };
 
     let to = match right {
-        "b" => to_binary,
-        "d" => to_decimal,
-        "h" => to_hex,
-        "a" => to_ascii,
-        "u" | "t" => to_utf8,
+        "b" | "binary" => to_binary,
+        "d" | "decimal" => to_decimal,
+        "h" | "hex" => to_hex,
+        "a" | "ascii" => to_ascii,
+        "u" | "t" | "utf8" | "text" => to_utf8,
         _ => panic!(),
     };
 
