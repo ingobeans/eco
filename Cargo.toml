@@ -1,7 +1,8 @@
 [package]
 name = "eco"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2021"
 
 [dependencies]
 ascii_converter = "0.3.0"
+base64 = "0.22.1"
