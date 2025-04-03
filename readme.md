@@ -20,3 +20,4 @@ formats
 - decimal
 - ascii
 - raw
+- base64
