@@ -15,6 +15,7 @@ fn get_selection_hashmaps() -> (
     hashmap_from.insert("utf8", parse_utf8);
     hashmap_from.insert("text", parse_utf8);
     hashmap_from.insert("ascii", parse_utf8); // utf-8 is backwards compatibable with ascii
+    hashmap_from.insert("raw", parse_utf8); // parsing utf-8 just directly converts the args to bytes
 
     let mut hashmap_to: HashMap<&str, fn(Vec<u8>)> = HashMap::new();
     hashmap_to.insert("binary", to_binary);

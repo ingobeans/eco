@@ -19,3 +19,4 @@ formats
 - utf8 (or text)
 - decimal
 - ascii
+- raw
