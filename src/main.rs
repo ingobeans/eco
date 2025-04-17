@@ -1,5 +1,5 @@
 use convert::*;
-use std::{collections::HashMap, env::args};
+use std::{collections::HashMap, env::args, io::{Read,stdin}};
 mod convert;
 
 fn get_selection_hashmaps() -> (
@@ -72,8 +72,19 @@ fn main() {
         print_help()
     };
 
-    let args_vec = args.collect();
-    let data = from(args_vec);
-    //println!("{data:?}");
+    let args_vec: Vec<String> = args.collect();
+
+    let data = if !args_vec.is_empty() {
+    	// read data from args if there are any
+    	from(args_vec)
+    } else {
+    	// else read the raw data from stdin
+
+    	// note: this doesnt care about the "from" format
+		let mut buf = Vec::new();
+    	stdin().read_to_end(&mut buf).unwrap();
+    	buf
+    };
+
     to(data);
 }

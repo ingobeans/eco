@@ -6,6 +6,10 @@ example: `eco decimal-ascii 97 98 99 100` > `abcd`
 
 or, a shorter version: `eco d-a 97 98 99 100` > `abcd`
 
+you can also convert data passed through stdin, by passing no other data as args.
+
+this however will not care about which `from` format is specified and instead just read raw data.
+
 ## help message
 
 usage: `eco <from>-<to> <any data to be converted>`
