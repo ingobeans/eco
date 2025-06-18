@@ -1,3 +1,7 @@
+disclaimer: this sucks this sucks this sucks this sucks this sucks this sucks this sucks this sucks this sucks this sucks this sucks this sucks this sucks
+
+maybe ill make a better version in future idk
+
 # eco
 
 eco is a cli tool for converting simple data between formats.
